@@ -312,6 +312,7 @@ def common_extensions(self):
     self.specials += Instance("finisher",
         i_report=self.test,
         i_done=self.sim.done,
+        i_progress=self.duart_pads.tx,
         i_clk = ClockSignal(),
     )
     self.platform.add_source("sim_support/finisher.v")

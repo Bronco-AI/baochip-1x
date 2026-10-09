@@ -435,8 +435,10 @@ class CramSoC(SoCCore):
                     )
                 elif name == "duart":
                     from soc_oss.duart_adapter import DuartAdapter
+                    # kept so the sim watchdog (sim_support/finisher.v) can watch UART activity
+                    self.duart_pads = platform.request("duart")
                     self.submodules += ClockDomainsRenamer({"sys" : "p"})(DuartAdapter(platform,
-                        getattr(self, name + "_ahb"), pads=platform.request("duart"),
+                        getattr(self, name + "_ahb"), pads=self.duart_pads,
                         base=(region[0] & 0xFF_FFFF), address_width=log2_int(region[1], need_pow2=True),
                     ))
                 elif name == "mbox_apb":
